@@ -1,16 +1,25 @@
 import { series } from "./data.js";
+import { Serie } from "./Serie.js";
 
 const tableBody: HTMLElement = document.getElementById("seriesTable")!;
+const cardContainer: HTMLElement = document.getElementById("cardBody")!;
 let totalSeasons = 0;
 
 series.forEach(serie => {
   const row = document.createElement("tr");
+
   row.innerHTML = `
     <td>${serie.id}</td>
-    <td>${serie.name}</td>
+    <td style="color: blue; cursor: pointer;">${serie.name}</td>
     <td>${serie.channel}</td>
     <td>${serie.seasons}</td>
   `;
+
+  const nameCell = row.children[1] as HTMLElement;
+  nameCell.addEventListener("click", () => {
+    serie.showCard(cardContainer);
+  });
+
   tableBody.appendChild(row);
   totalSeasons += serie.seasons;
 });
